@@ -2,7 +2,6 @@
 name: CI
 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
@@ -11,19 +10,21 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  job1:
+    name: First Job
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Step one
+        uses: actions/checkout@v2
+      - name: Step two
+        run: env | sort
 
-      - name: Run a one-line script
-        run: echo Hello, world!
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+  job2:
+    name: Second Job
+    runs-on: windows-latest
+    steps:
+      - name: Step one
+        uses: actions/checkout@v2
+      - name: Step two
+        run: "Get-ChildItem Env: | Sort-Object Name"
